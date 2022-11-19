@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Guest Page</title>
+
+  <!-- Do not forget to change the path to the css file -->
+  <link href="" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+
+
+<div id="box">
+
+  <!-- In case of error, you should display div with class "error-container" -->
+  <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
+  <!--
+  <div class="error-container">
+      <p>Error</p>
+  </div>-->
+  <nav>
+    <!-- Do not forget to change the path to the image -->
+    <img src="./assets/logo.png" alt="logo">
+
+    <ul class="menu">
+      <li routerLinkActive="active"><a routerLink="/">Home</a></li>
+      <li routerLinkActive="active"><a routerLink="/catalog">All Posts</a></li>
+
+      <!-- Logged users -->
+      <li routerLinkActive="active" *ngIf="auth.isAuthenticated()"><a routerLink="/create">Create Post</a></li>
+      <li routerLinkActive="active" *ngIf="auth.isAuthenticated()"><a routerLink="/profile">Posts of {{currentUserEmail}}</a></li>
+      <li routerLinkActive="active" *ngIf="auth.isAuthenticated()"><a href="#" (click)="logout($event)">Logout</a></li>
+      <!-- Guest users -->
+      <li routerLinkActive="active" *ngIf="!auth.isAuthenticated()"><a routerLink="/register">Register</a></li>
+      <li routerLinkActive="active" *ngIf="!auth.isAuthenticated()"><a routerLink="/login">Login</a></li>
+    </ul>
+
+  </nav>
+
+  <main>
+
+    <router-outlet></router-outlet>
+  </main>
+
+
+  <footer>
+    © Frontend Technologies
+  </footer>
+</div>
+
+</body>
+
+</html>
+

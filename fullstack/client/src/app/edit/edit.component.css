@@ -1,0 +1,11 @@
+.dn{
+  display: none;
+}
+.h200{
+  height: 150px;
+  width: 150px;
+}
+.img{
+  position: absolute;
+  left:15px;
+}

@@ -1,0 +1,63 @@
+<section id="details-page">
+  <div *ngIf="error" class="error-container">
+
+    <p>{{error}}</p>
+
+  </div>
+
+  <div class="main_card">
+    <div class="card_left">
+      <div class="card_datails">
+
+        <h1>Title: {{post?.title}}</h1>
+        <h3>Created by an author: {{post?.author?.firstName}} {{post?.author?.lastName}}</h3>
+        <div class="card_animal">
+          <p class="card-keyword">Keyword: {{post?.keyword}}</p>
+          <p class="card-location">Location: {{post?.location}}</p>
+          <p class="card-date">Date: {{post?.date}}</p>
+        </div>
+
+        <p class="disc">{{post?.description}}</p>
+
+        <!-- If there is no registered user, do not display buttons-->
+        <div class="social-btn" *ngIf="post?.hasUser">
+          <!-- Only for registered user and author of the post -->
+          <a [routerLink]="['/edit/',post?._id]" class="edit-btn" *ngIf="post?.isAuthor">Edit</a>
+          <a href="#" (click)="deletePost($event)"  class="del-btn" *ngIf="post?.isAuthor">Delete</a>
+          <!-- logged in users, who have not yet voted-->
+          <a [routerLink]="['/details/',post?._id]" (click)="upVotePost($event)" class="vote-up" *ngIf="!post?.isVoted! && !post?.isAuthor">UpVote +1</a>
+          <a [routerLink]="['/details/',post?._id]" (click)="downVotePost($event)" class="vote-down" *ngIf="!post?.isVoted! && !post?.isAuthor">DownVote -1</a>
+          <!-- logged in user who has already voted-->
+          <p class="thanks-for-vote" *ngIf="post?.isVoted && !post?.isAuthor">Thanks For Voting</p>
+
+        </div>
+      </div>
+    </div>
+    <div class="card_right">
+      <img src="{{post?.imageUrl}}" alt="image">
+    </div>
+  </div>
+
+</section>
+
+<section id="votes">
+  <div class="vote-info">
+    <div class="card_left">
+      <div class="card_datails">
+        <h1>Votes</h1>
+        <div class="card_vote">
+          <!-- Show the rating of votes, if there are no votes yet, the number must be 0. -->
+          <p class="PV">Total rating of votes:{{post?.rating}}</p>
+        </div>
+        <!--If there are already people who have cast their vote for the post, separate their emails with a comma and a space ", " -->
+         <p class="disc" *ngIf="post?.votes?.length! > 0">
+           People who voted for the post - {{post?.peopleVoted}}
+         </p>
+
+        <!-- If not display: -->
+        <p class="disc" *ngIf="post?.votes?.length! === 0">People who voted for the post - No one has voted yet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+

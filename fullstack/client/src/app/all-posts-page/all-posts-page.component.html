@@ -1,0 +1,43 @@
+<section id="catalog">
+  <h1>All posts</h1>
+  <div
+    *ngIf="catalog$ | async as catalog;else loader"
+  >
+    <div
+      class="band"
+      *ngIf="catalog.length !== 0;else empty"
+    >
+
+      <!-- If there are posts for wildlife in the database display each of them -->
+      <div
+        class="flip flip-vertical"
+        *ngFor="let item of catalog"
+      >
+        <div class="front">
+          <img src="{{item.imageUrl}}" alt="image_nature_1">
+          <h1 class="text-shadow">Keyword: {{item.keyword}}</h1>
+        </div>
+        <div class="back">
+          <h2>{{item.title}}</h2>
+          <p>Description: {{item.description}}</p>
+          <a [routerLink]="['/details/',item._id]" class="details">Details</a>
+        </div>
+      </div>
+    </div>
+    <ng-template #empty>
+      <!-- If there are still no posts for wildlife in the database display: -->
+      <div class="no-posts">
+        <div class="no-posts-img">
+          <!/-- Do not forget to change the path to the image, and remove this comment  --/>
+          <img src="./assets/animal.jpg" alt="image_nature_3">
+        </div>
+        <p class="no-offer">There are no posts yet...</p>
+      </div>
+    </ng-template>
+  </div>
+  <ng-template #loader>
+    <app-loader></app-loader>
+  </ng-template>
+</section>
+
+

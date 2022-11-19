@@ -1,0 +1,150 @@
+<section id="register-page">
+  <div *ngIf="success" class="success-container">
+
+    <p>{{success}}</p>
+
+  </div>
+  <div *ngIf="error" class="error-container">
+
+    <p>{{error}}</p>
+
+  </div>
+  <div class="signupSection">
+    <div class="info">
+      <h2>To discover and share knowledge about the environment in order to preserve and enrich life.</h2>
+    </div>
+    <form
+      action="#"
+      method=""
+      class="signupForm"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+    >
+      <h2>Sign Up</h2>
+      <ul class="noBullet">
+        <li>
+          <label for="firstName">First Name:</label>
+          <input
+            formControlName="firstName"
+            type="text"
+            class="inputFields"
+            id="firstName"
+            name=""
+            value=""
+            placeholder="Alex"
+            [ngClass]="{'invalid': form.get('firstName')?.invalid && form.get('firstName')?.touched}"
+          />
+          <p
+            class="helper-text red-text"
+            *ngIf= "form.get('firstName')?.invalid && form.get('firstName')?.touched"
+          >
+            <span class="red-text" *ngIf="form.get('firstName')?.errors?.['required']">Field can not be empty!</span>
+            <span class="red-text" *ngIf="form.get('firstName')?.errors?.['minlength'] &&
+        form.get('firstName')?.errors?.['minlength']['requiredLength']">
+          First name must be more {{form.get('firstName')?.errors?.['minlength']['requiredLength']}} letters!
+          Now {{form.get('firstName')?.errors?.['minlength']['actualLength']}}
+        </span>
+          </p>
+        </li>
+        <li>
+          <label for="lastName">Last Name:</label>
+          <input
+            formControlName="lastName"
+            type="text"
+            class="inputFields"
+            id="lastName"
+            name=""
+            value=""
+            placeholder="Petkov"
+            [ngClass]="{'invalid': form.get('lastName')?.invalid && form.get('lastName')?.touched}"
+          />
+          <p
+            class="helper-text red-text"
+            *ngIf= "form.get('lastName')?.invalid && form.get('lastName')?.touched"
+          >
+            <span class="red-text" *ngIf="form.get('lastName')?.errors?.['required']">Field can not be empty!</span>
+            <span class="red-text" *ngIf="form.get('lastName')?.errors?.['minlength'] &&
+        form.get('lastName')?.errors?.['minlength']['requiredLength']">
+          Last name must be more {{form.get('lastName')?.errors?.['minlength']['requiredLength']}} letters!
+          Now {{form.get('lastName')?.errors?.['minlength']['actualLength']}}
+        </span>
+          </p>
+        </li>
+        <li>
+          <label for="email">Email:</label>
+          <input
+            formControlName="email"
+            type="text"
+            class="inputFields"
+            id="email"
+            name=""
+            value=""
+            placeholder="alex@gmail.com"
+            [ngClass]="{'invalid': form.get('email')?.invalid && form.get('email')?.touched}"
+          />
+          <p
+            class="helper-text red-text"
+            *ngIf= "form.get('email')?.invalid && form.get('email')?.touched"
+          >
+            <span class="red-text" *ngIf="form.get('email')?.hasError('required')">Email can not be empty!</span>
+            <span class="red-text" *ngIf="form.get('email')?.hasError('email')">Please enter valid email!</span>
+          </p>
+        </li>
+
+      </ul>
+      <ul class="noBullet" formGroupName="passwords">
+        <li>
+          <label for="password">Password:</label>
+          <input
+            formControlName="password"
+            type="password"
+            class="inputFields"
+            id="password"
+            name=""
+            placeholder="******"
+            [ngClass]="{'invalid': form.get('password')?.invalid && form.get('password')?.touched}"
+          />
+          <ng-container *ngIf="shouldShowErrorControl('password',passwordsGroup)">
+            <p class="helper-text red-text" *ngIf="passwordsGroup.controls['password'].errors?.['required']">Password can
+              not be empty!</p>
+            <p class="helper-text red-text" *ngIf="passwordsGroup.controls['password'].errors?.['minlength'] &&
+                 passwordsGroup.controls['password'].errors?.['minlength']['requiredLength']">
+              Password must be more {{passwordsGroup.controls['password'].errors?.['minlength']['requiredLength']}} symbols!
+              Now {{passwordsGroup.controls['password'].errors?.['minlength']['actualLength']}}
+            </p>
+          </ng-container>
+        </li>
+        <li>
+          <label for="rePassword">Repeat-Password:</label>
+          <input
+            type="password"
+            class="inputFields"
+            id="rePassword"
+            name=""
+            placeholder="******"
+            formControlName="rePassword"
+            [ngClass]="{'invalid': form.get('rePassword')?.invalid && form.get('rePassword')?.touched}"
+          />
+          <ng-container *ngIf="shouldShowErrorControl('rePassword',passwordsGroup)">
+            <p class="helper-text red-text" *ngIf="passwordsGroup.controls['rePassword'].errors?.['passwordMissmatch']">
+
+              Repeat Password does not match password!
+            </p>
+          </ng-container>
+        </li>
+        <li id="center-btn">
+          <button
+            id="join-btn"
+            class="btn"
+            type="submit"
+            [disabled]="form.invalid || form.disabled"
+          >
+            Join
+          </button>
+        </li>
+      </ul>
+
+
+    </form>
+  </div>
+</section>
