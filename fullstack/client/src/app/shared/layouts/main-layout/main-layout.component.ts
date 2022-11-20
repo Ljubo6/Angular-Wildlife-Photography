@@ -24,8 +24,6 @@ export class MainLayoutComponent implements OnInit {
     this.currentUser = this.userService.getAuthenticatedCurrentUser()
 
     this.currentUserEmail = this.currentUser?.email
-    console.log(this.currentUser)
-    console.log('Email:',this.currentUserEmail)
   }
   logout(event: Event) {
     event.preventDefault()
