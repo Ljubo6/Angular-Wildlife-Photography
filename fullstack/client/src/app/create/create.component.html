@@ -1,4 +1,9 @@
 <section id="create-page">
+  <div *ngIf="success" class="success-container">
+
+    <p>{{success}}</p>
+
+  </div>
   <div *ngIf="error" class="error-container">
 
     <p>{{error}}</p>

@@ -17,6 +17,7 @@ export class CreateComponent implements OnInit {
   image!:File
   imagePreview!: string | ArrayBuffer | null | undefined
   error:String = ''
+  success:String = ''
   post!:Post
   constructor(
     private postService: PostService,
@@ -51,7 +52,7 @@ export class CreateComponent implements OnInit {
     obs$.subscribe({
       next: (post) => {
         this.post = post
-        this.error = 'Changes have been saved'
+        this.success = 'Changes have been saved'
         this.form.enable()
         setTimeout(() => {
           this.router.navigate(['/catalog'])
@@ -62,6 +63,7 @@ export class CreateComponent implements OnInit {
         this.form.enable()
       }
     })
+    this.success = ''
   }
 
   triggerClick() {
