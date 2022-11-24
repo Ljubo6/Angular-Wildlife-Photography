@@ -3,8 +3,7 @@ import {
   CanActivate,
   CanActivateChild,
   Router,
-  RouterStateSnapshot,
-  UrlTree
+  RouterStateSnapshot
 } from "@angular/router";
 import {Observable, of} from "rxjs";
 import {Injectable} from "@angular/core";

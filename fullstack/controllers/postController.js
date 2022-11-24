@@ -13,20 +13,18 @@ module.exports.getAllPosts = async function(req,res){
 module.exports.getPostById = async function(req,res){
     try{
         const post = await Post.findById(req.params.id).populate('author').populate('votes').lean()
-        // console.log(post)
         res.status(200).json(post)
     }catch (e) {
         errorHandler(res,e)
     }
 }
 module.exports.createPost = async function(req,res){
-    console.log(req.user)
     const post = await  new Post({
         title: req.body.title.trim(),
         keyword: req.body.keyword.trim(),
         location: req.body.location.trim(),
         date: req.body.date.trim(),
-        imageUrl: req.file ? req.file.path : '',
+        imageUrl: req.body.imageUrl.trim(),
         description: req.body.description.trim(),
         author: req.user.id
     })
@@ -47,17 +45,14 @@ module.exports.editPost = async function(req,res){
         keyword: req.body.keyword.trim(),
         location: req.body.location.trim(),
         date: req.body.date.trim(),
+        imageUrl: req.body.imageUrl.trim(),
         description: req.body.description.trim()
-    }
-    if(req.file){
-        updated.imageUrl = req.file.path
     }
     try{
        const post = await Post.findOneAndUpdate(
             {_id: req.params.id},
             {$set: updated},
             {new:true}
-
         )
         res.status(200).json(post)
     }catch (e) {

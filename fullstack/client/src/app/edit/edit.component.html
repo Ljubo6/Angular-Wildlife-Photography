@@ -127,39 +127,29 @@
         </li>
         <li>
           <label for="image">Wildlife image:</label>
-          <!--          <input-->
-          <!--            formControlName="imageUrl"-->
-          <!--            type="text"-->
-          <!--            class="inputFields"-->
-          <!--            id="image"-->
-          <!--            placeholder="http:/..."-->
-          <!--            name=""-->
-          <!--            value=""-->
-          <!--            [ngClass]="{'invalid' : form.get('imageUrl')?.invalid && form.get('imageUrl')?.touched}"-->
-          <!--          />-->
-          <input
-
-            type="file"
-            class="dn"
-            id="image"
-            (change)="onFileUpload($event)"
-            #input
+                    <input
+                      formControlName="imageUrl"
+                      type="text"
+                      class="inputFields"
+                      id="image"
+                      placeholder="http:/..."
+                      (change)="onFileUpload($event)"
+                      name=""
+                      value=""
+                      [ngClass]="{'invalid' : form.get('imageUrl')?.invalid && form.get('imageUrl')?.touched}"
+                    />
+          <p
+            class="red"
+            *ngIf="url['imageUrl']?.invalid && url['imageUrl']?.touched"
           >
-          <button
-            (click)="triggerClick()"
-            [disabled]="form.disabled"
-            type="button"
-            class="btn-load"
-          >
-            Load image
-          </button>
-          <!--          <p-->
-          <!--            class="red"-->
-          <!--            *ngIf="form.get('imageUrl')?.invalid && form.get('imageUrl')?.touched"-->
-          <!--          >-->
-          <!--            <span class="red" *ngIf="form.get('imageUrl')?.errors?.['required']">Field can not be empty!</span>-->
+            <span
+              class="red" *ngIf="url['imageUrl']?.errors?.['required']"
+            >URL is required</span>
+            <span
+              class="red" *ngIf="url['imageUrl']?.errors?.['pattern']"
+            >URL have to start with http or https</span>
 
-          <!--          </p>-->
+          </p>
         </li>
         <li>
           <label for="description">Description:</label>

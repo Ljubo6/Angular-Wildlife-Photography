@@ -16,27 +16,25 @@ export class EditComponent implements OnInit {
 
   @ViewChild('input') inputRef!:ElementRef
   form!: FormGroup
-  image!:File
   imagePreview!: string | ArrayBuffer | null | undefined
   error: String = ''
   success:String = ''
   post!: Post
 
-
   constructor(
     private route:ActivatedRoute,
     private postService: PostService,
-    private router: Router,
-    private userService: UserService
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    const urlRegex = '^https?:\\/*(?:\\w+(?::\\w+)?@)?[^\\s\\/]+(?::\\d+)?(?:\\/[\\w#!:.?+=&%@\\-\\/]*)?$'
     this.form = new FormGroup({
       title: new FormControl(null,[Validators.required,Validators.minLength(6)]),
       keyword: new FormControl(null,[Validators.required,Validators.minLength(6)]),
       location: new FormControl(null,[Validators.required,Validators.maxLength(15)]),
       date: new FormControl(null,[Validators.required,Validators.minLength(10),Validators.maxLength(10)]),
-      // imageUrl: new FormControl(null,[Validators.required]),
+      imageUrl: new FormControl(null,[Validators.required,Validators.pattern( urlRegex)]),
       description: new FormControl(null,[Validators.required,Validators.minLength(8)]),
     })
     this.route.params
@@ -59,9 +57,11 @@ export class EditComponent implements OnInit {
               keyword: post.keyword,
               location: post.location,
               date: post.date,
+              imageUrl: post.imageUrl,
               description: post.description
 
             })
+            this.imagePreview = post.imageUrl
           }
 
           this.form.enable()
@@ -71,7 +71,9 @@ export class EditComponent implements OnInit {
         }
       })
   }
-
+  get url() {
+    return this.form.controls;
+  }
   onSumbit() {
     let obs$:Observable<Post>
     const postData: Post = {
@@ -79,11 +81,11 @@ export class EditComponent implements OnInit {
       keyword: this.form.value.keyword.trim(),
       location: this.form.value.location.trim(),
       date: this.form.value.date.trim(),
-      // imageUrl: this.image,
+      imageUrl: this.form.value.imageUrl.trim(),
       description: this.form.value.description.trim(),
     }
     this.form.disable()
-    obs$ = this.postService.edit(this.post._id!,postData,this.image)
+    obs$ = this.postService.edit(this.post._id!,postData)
     obs$.subscribe({
       next: (post) => {
         this.post = post
@@ -102,19 +104,8 @@ export class EditComponent implements OnInit {
     this.success = ''
   }
 
-  triggerClick() {
-    this.inputRef.nativeElement.click()
-  }
-
   onFileUpload(event: any) {
-    const file = event.target.files[0]
-    this.image = file
-
-    const reader = new FileReader()
-    reader.onload = () =>{
-      this.imagePreview = reader.result
-    }
-    reader.readAsDataURL(file)
+    this.imagePreview = this.form.value.imageUrl
   }
 
 }

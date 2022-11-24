@@ -4,7 +4,7 @@ const schema = new Schema({
     keyword:{type:String,required:true},
     location:{type:String,required:true},
     date:{type:String,required:true},
-    imageUrl:{type:String,default:''},
+    imageUrl:{type:String,default: ''},
     description:{type:String,required:true},
     author:{type:Schema.Types.ObjectId,ref:'User'},
     votes:[{type:Schema.Types.ObjectId,ref:'User',default:[]}],

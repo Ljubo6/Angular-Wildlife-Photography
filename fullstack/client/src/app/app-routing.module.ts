@@ -24,6 +24,7 @@ const routes: Routes = [
       {path:'profile',component: ProfileComponent,canActivate: [AuthGuard]},
       {path:'login',component: LoginPageComponent},
       {path:'register',component: RegisterPageComponent},
+      {path:'error',component: NotFoundComponent},
       {path:'**',component: NotFoundComponent}
     ]
   }

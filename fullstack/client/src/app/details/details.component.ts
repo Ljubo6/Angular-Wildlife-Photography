@@ -4,7 +4,7 @@ import {FormGroup} from "@angular/forms";
 import {PostService} from "../shared/services/post.service";
 import {switchMap} from "rxjs/operators";
 import {of} from "rxjs";
-import {Post, User} from "../shared/interfaces";
+import {Post} from "../shared/interfaces";
 import {AuthService} from "../shared/services/auth.service";
 import {UserService} from "../shared/services/user.service";
 
@@ -15,30 +15,11 @@ import {UserService} from "../shared/services/user.service";
   styleUrls: ['./details.component.css']
 })
 export class DetailsComponent implements OnInit,OnDestroy {
-
-
-
-  currentUser!:User
-  currentUserId?:string =''
-  currentUserEmail?:string = ''
-  userId!:string | null
-  token!:string | null
-  decodeToken!:User
   form!:FormGroup
   error: String = ''
   post!: Post | null
-  title:string = ''
-  keyword:string = ''
-  location:string = ''
-  date:string = ''
-  imageUrl?:string = ''
-  description:string = ''
   id?:string = ''
-  firstName:string = ''
-  lastName:string = ''
-  author!:any
   votes!:any
-  rating?:number = 0
   constructor(
     public auth:AuthService,
     private userService: UserService,
@@ -67,16 +48,11 @@ export class DetailsComponent implements OnInit,OnDestroy {
       )
       .subscribe({
         next: (post) => {
-          if (!this.auth.isAuthenticated()){
-            this.votes = post!.votes
-            post!.peopleVoted = this.votes.map((x: { email: any; }) => x.email).join(' ')
-          }
           this.post = post
           this.id = post?._id
-            console.log('CurrentPost',this.post)
         },
         error: error => {
-          this.error = error.error.message
+          this.router.navigate(['/error'])
         }
       })
   }
@@ -85,7 +61,6 @@ export class DetailsComponent implements OnInit,OnDestroy {
     event.preventDefault()
     const decision = window.confirm(`Do you want to  delete this Post "${this.post?.title}"`)
     if (decision){
-      console.log(this.post?._id!)
       this.postService.delete(this.post?._id!)
         .subscribe({
           next: (response) => {
@@ -103,7 +78,6 @@ export class DetailsComponent implements OnInit,OnDestroy {
   }
 
   upVotePost(event: Event) {
-    console.log(this.id)
     this.postService.like(this.id!).subscribe({
       next:(post) => {
         this.post = post

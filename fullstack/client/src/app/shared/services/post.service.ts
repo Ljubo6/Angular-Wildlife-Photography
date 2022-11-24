@@ -9,32 +9,11 @@ import {Observable} from "rxjs";
 export class PostService {
 
   constructor(private http:HttpClient) { }
-  create(postData: Post,image?:File):Observable<Post>{
-
-    const fd = new FormData()
-    if(image){
-      fd.append('image',image,image.name)
-    }
-    fd.append('title',postData.title)
-    fd.append('keyword',postData.keyword)
-    fd.append('location',postData.location)
-    fd.append('date',postData.date)
-    fd.append('description',postData.description)
-    return this.http.post<Post>('/api/post',fd)
+  create(postData: Post):Observable<Post>{
+    return this.http.post<Post>('/api/post',postData)
   }
-  edit(id:string,postData: Post,image?:File):Observable<Post>{
-
-    const fd = new FormData()
-    if(image){
-      fd.append('image',image,image.name)
-    }
-    fd.append('title',postData.title)
-    fd.append('keyword',postData.keyword)
-    fd.append('location',postData.location)
-    fd.append('date',postData.date)
-    fd.append('description',postData.description)
-
-    return this.http.patch<Post>(`/api/post/${id}`,fd)
+  edit(id:string,postData: Post):Observable<Post>{
+    return this.http.patch<Post>(`/api/post/${id}`,postData)
   }
   getById(id:string):Observable<Post>{
     return this.http.get<Post>(`/api/post/${id}`)

@@ -65,11 +65,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.router.navigate(['/'])
         },1000)
-
-
-        //   .then(() => {
-        //   window.location.reload();
-        // })
       },
       error: err => {
         console.log(err)
