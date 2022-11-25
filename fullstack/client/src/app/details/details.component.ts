@@ -48,6 +48,10 @@ export class DetailsComponent implements OnInit,OnDestroy {
       )
       .subscribe({
         next: (post) => {
+          if (!this.auth.isAuthenticated()){
+            this.votes = post!.votes
+            post!.peopleVoted = this.votes.map((x: { email: any; }) => x.email).join(' ')
+          }
           this.post = post
           this.id = post?._id
         },
